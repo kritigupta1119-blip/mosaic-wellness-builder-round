@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reset: tiny breaks that learn what works for you</title>
+<style>
+:root{--ink:#fff;--mut:#d8d4ee;--acc:#ffb36b;--glass:rgba(22,18,48,.58);--line:rgba(255,255,255,.22);--chip:rgba(255,255,255,.12);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:#1b1740;color:var(--ink);font:16px/1.5 ui-rounded,"SF Pro Rounded",Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;overflow-x:hidden}
+.env{position:fixed;inset:0;opacity:0;transition:opacity 1.6s ease;z-index:-2}.env.on{opacity:1}
+#day{background:radial-gradient(circle at 80% 16%,#fff7c8 0 4%,rgba(255,240,170,.55) 8%,transparent 22%),radial-gradient(ellipse 30% 7% at 22% 26%,#fff,transparent 70%),radial-gradient(ellipse 26% 6% at 66% 38%,rgba(255,255,255,.9),transparent 70%),radial-gradient(ellipse 45% 20% at 0 100%,#238a5c,transparent 70%),radial-gradient(ellipse 40% 16% at 100% 100%,#2fa06f,transparent 70%),linear-gradient(#5aaeea,#9fd6f5 60%,#ffe8b5)}
+#sunset{background:radial-gradient(circle at 50% 78%,#fff0b0 0 5%,rgba(255,170,90,.7) 14%,transparent 40%),linear-gradient(#35235f,#b24a82 45%,#ff8f6b 75%,#ffc27a)}
+#sunset::after{content:'';position:absolute;left:0;right:0;bottom:0;height:17%;background:#1d1032;clip-path:polygon(0 60%,6% 60%,6% 30%,12% 30%,12% 50%,19% 50%,19% 15%,25% 15%,25% 45%,33% 45%,33% 25%,40% 25%,40% 55%,48% 55%,48% 35%,55% 35%,55% 10%,61% 10%,61% 48%,70% 48%,70% 28%,77% 28%,77% 52%,85% 52%,85% 20%,92% 20%,92% 45%,100% 45%,100% 100%,0 100%)}
+#night{background:radial-gradient(circle at 78% 18%,#fffbe6 0 3%,rgba(220,230,255,.5) 5%,transparent 16%),linear-gradient(#060a22,#14235a 70%,#2a3f80)}
+#rain{background:radial-gradient(ellipse at 50% 120%,rgba(255,200,130,.3),transparent 60%),linear-gradient(#2c3650,#56647e 70%,#7a8aa3);box-shadow:inset 0 0 0 14px rgba(20,24,40,.55),inset 0 0 120px rgba(0,0,0,.4)}
+#dream{background:radial-gradient(circle at 20% 25%,rgba(255,255,255,.5),transparent 22%),radial-gradient(circle at 75% 60%,rgba(120,220,255,.5),transparent 28%),linear-gradient(135deg,#5a3fa8,#d77fd0 55%,#7fd6f0);animation:dr 14s ease-in-out infinite alternate}
+@keyframes dr{to{filter:hue-rotate(40deg)}}
+#fx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.st,.dp{position:absolute;opacity:0;transition:opacity 1.6s}
+.st{width:3px;height:3px;border-radius:50%;background:#fff;animation:tw 3s ease-in-out infinite alternate}
+.dp{width:2px;height:60px;background:linear-gradient(transparent,rgba(210,225,255,.7));animation:fall linear infinite}
+body[data-e=night] .st,body[data-e=dream] .st,body[data-e=rain] .dp{opacity:1}
+@keyframes tw{to{transform:scale(.3)}}@keyframes fall{from{transform:translateY(-80px)}to{transform:translateY(105vh)}}
+.app{max-width:620px;margin:0 auto;padding:14px 18px 48px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:18px}
+.brand{font-weight:800;font-size:20px;letter-spacing:-.5px;background:none;border:0;color:#fff;cursor:pointer;font-family:inherit}
+.tools{display:flex;gap:4px;background:var(--glass);backdrop-filter:blur(14px);padding:4px;border-radius:99px;border:1px solid var(--line)}
+.tools button{border:0;background:none;font-size:17px;width:36px;height:36px;border-radius:50%;cursor:pointer}
+.tools button.on{background:rgba(255,255,255,.28)}
+.bk{border:0;background:var(--chip);color:#fff;font:inherit;font-size:14px;padding:6px 14px;border-radius:99px;cursor:pointer;margin-bottom:12px}
+h1{font-size:38px;line-height:1.05;letter-spacing:-1.2px;margin:0 0 10px;font-weight:800;text-shadow:0 2px 20px rgba(0,0,0,.25)}
+h2{font-size:22px;margin:0 0 14px;letter-spacing:-.5px}
+p.sub{color:var(--mut);margin:0 0 8px;font-size:17px}
+.glass{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:24px;padding:22px;margin-top:14px;box-shadow:0 12px 40px -12px rgba(0,0,0,.45)}
+.hero{padding:56px 0 20px}.hero h1{font-size:72px;letter-spacing:-3px}
+.btn{display:block;width:100%;margin-top:24px;border:0;border-radius:18px;background:var(--acc);color:#2a1740;font:inherit;font-weight:800;font-size:18px;padding:17px;cursor:pointer;min-height:54px;box-shadow:0 10px 30px -8px var(--acc)}
+.btn:disabled{opacity:.4;cursor:not-allowed}.btn.g{background:var(--chip);color:#fff;box-shadow:none;margin-top:10px;font-weight:600}
+button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:520px){.grid{grid-template-columns:repeat(4,1fr)}}
+.ch{position:relative;border:2px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);color:#fff;font:inherit;border-radius:20px;padding:14px 8px;cursor:pointer;text-align:center;transition:transform .2s}
+.ch:hover{transform:translateY(-3px) rotate(-1deg)}.ch.on{border-color:#fff;transform:translateY(-5px) scale(1.04);box-shadow:0 0 0 4px rgba(255,255,255,.2)}
+.av{width:62px;height:62px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;font-size:32px;box-shadow:inset 0 -6px 12px rgba(0,0,0,.18),0 6px 14px rgba(0,0,0,.25)}
+.av.s{width:48px;height:48px;font-size:25px;margin:0}.ch b{display:block;font-size:15px}.ch span{font-size:12px;color:var(--mut);line-height:1.2;display:block}
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.pill{flex:1;min-width:110px;border:2px solid var(--line);background:var(--glass);color:#fff;font:inherit;font-weight:700;font-size:18px;padding:16px;border-radius:18px;cursor:pointer;min-height:54px}
+.pill.on{border-color:#fff;background:rgba(255,255,255,.28)}
+.moods{display:flex;gap:8px}.mood{flex:1;font-size:26px;padding:10px 0;border-radius:14px;border:2px solid var(--line);background:var(--glass);cursor:pointer;min-height:50px}.mood.on{border-color:#fff;background:rgba(255,255,255,.28);transform:translateY(-3px)}
+.path{display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0 4px}.path .n{text-align:center;font-size:14px}
+.arr{font-size:30px;animation:nudge 1.4s ease-in-out infinite}@keyframes nudge{50%{transform:translateX(6px)}}
+.meta{color:var(--mut);font-size:14px}.q{font-style:italic;color:var(--mut);text-align:center;margin:8px 0 0;font-size:15px}
+.orbwrap{height:270px;display:grid;place-items:center}
+.orb{width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ffe0b0,#ff8fb0 55%,#7a5af0);transform:scale(.6);box-shadow:0 20px 70px -10px rgba(255,160,200,.7);display:grid;place-items:center;font-size:44px;font-weight:800;transition-property:transform;transition-timing-function:ease-in-out}
+.bar{height:6px;background:var(--chip);border-radius:9px;overflow:hidden;margin:14px 0}.bar i{display:block;height:100%;background:#fff;width:0;transition:width 1s linear}
+.cue{font-size:25px;font-weight:800;letter-spacing:-.5px;min-height:70px;line-height:1.2;text-align:center}
+.row{display:flex;gap:8px}.row .btn{margin-top:14px;font-size:15px;padding:13px}
+.flow{text-align:center}.flow .av{margin:0 auto 4px}.dn{font-size:22px;margin:6px 0;color:var(--mut)}
+.lift{font-size:44px;font-weight:800;letter-spacing:-1px;margin:6px 0}
+.sp{position:fixed;font-size:22px;pointer-events:none;animation:pop 1.6s ease-out forwards;z-index:5}@keyframes pop{from{transform:translateY(0) scale(.5);opacity:1}to{transform:translateY(-160px) scale(1.3);opacity:0}}
+.lf{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:15px}.lf .nm{width:130px;flex:none}.lf .tr{flex:1;height:10px;background:var(--chip);border-radius:9px;position:relative;overflow:hidden}.lf .tr i{position:absolute;inset:0 auto 0 0;background:#fff;border-radius:9px}.lf .v{width:44px;text-align:right;font-weight:700}
+.hi{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:var(--chip);border-radius:16px;padding:12px}.stat b{display:block;font-size:22px}.stat span{font-size:13px;color:var(--mut)}
+.link{background:none;border:0;color:var(--mut);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;margin-top:16px}
+.fine{margin-top:30px;color:var(--mut);font-size:12px;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+
+.avs{display:block;margin:0 auto 6px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.3));transition:transform .4s}
+.ch.on,.em.on{animation:glow 2s ease-in-out infinite}@keyframes glow{50%{box-shadow:0 0 0 6px rgba(255,255,255,.28),0 0 34px rgba(255,255,255,.5)}}
+.emos{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 18px;margin:8px -4px 0;-webkit-overflow-scrolling:touch}
+.em{flex:0 0 150px;scroll-snap-align:center;border:2px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);color:#fff;font:inherit;border-radius:24px;padding:14px 8px;cursor:pointer;text-align:center;transition:transform .2s}
+.em b{display:block}.em span{font-size:14px;color:var(--mut)}.em.on{border-color:#fff;transform:translateY(-4px) scale(1.04)}
+@media(min-width:560px){.emos{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible}.em{flex:none}}
+.inp{display:flex;gap:8px;flex-wrap:wrap}.inp input{flex:1;min-width:170px;background:rgba(255,255,255,.14);border:2px solid var(--line);color:#fff;font:inherit;border-radius:14px;padding:13px 14px;min-height:50px}.inp input::placeholder{color:#d8d4ee}.inp .btn{width:auto;margin:0;padding:13px 18px;font-size:16px}
+.prog{display:flex;gap:6px;margin-bottom:12px;font-size:12px}.prog span{flex:1;text-align:center;padding:6px 2px;border-radius:99px;background:var(--chip);color:var(--mut);white-space:nowrap}.prog .on{flex:3;background:#fff;color:#2a1740;font-weight:800}.prog .dn{background:rgba(255,255,255,.28);color:#fff}
+.prog span:not(.on){font-size:0}.prog span:not(.on)::before{content:attr(data-n);font-size:12px}
+.jr{display:flex;align-items:center;justify-content:center;gap:10px}.jc,.jm{text-align:center;flex:1}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}main>*{animation:rise .4s ease both}
+@media(max-width:520px){.jr{flex-direction:column}.jm .arr{transform:rotate(90deg);animation:none}}
+</style>
+</head>
+<body data-e="day">
+<div class="env" id="day"></div><div class="env" id="sunset"></div><div class="env" id="night"></div><div class="env" id="rain"></div><div class="env" id="dream"></div><div id="fx"></div>
+<div class="app">
+<header><button class="brand" id="home" aria-label="Reset home">Reset</button>
+<div class="tools" id="tools" role="group" aria-label="Environment"><button data-e="day" title="Day" aria-label="Day">☀️</button><button data-e="sunset" title="Sunset" aria-label="Sunset">🌅</button><button data-e="night" title="Night" aria-label="Night">🌙</button><button data-e="rain" title="Rain" aria-label="Rain">🌧️</button><button data-e="dream" title="Dream" aria-label="Dream">✨</button><button id="pf" title="My profile" aria-label="My profile">👤</button></div></header>
+<main id="m"></main>
+<p class="fine">Reset offers general relaxation and movement breaks, not medical advice. Characters are just for fun, not a diagnosis. Stop any exercise that hurts.</p>
+</div>
+<script>
+const $=s=>document.querySelector(s),M=$('#m');
+let S={log:[],env:'day',sel:[]};try{S=Object.assign(S,JSON.parse(localStorage.getItem('reset_v1'))||{})}catch(e){}
+const save=()=>{try{localStorage.setItem('reset_v1',JSON.stringify(S))}catch(e){}};
+const FACES=['😣','😕','😐','🙂','😄'];
+const C=[
+{id:'luffy',n:'Luffy',v:'playful, energetic, spontaneous',k:'energy',to:'energized',g:['#ff8a5c','#ffcf5c'],s:'#ffd9b8',h:'#2b2230',hs:'hat'},
+{id:'naruto',n:'Naruto',v:'determined, loud, never quits',k:'focus',to:'driven',g:['#ff9f43','#ff6b35'],s:'#ffd9b8',h:'#ffd94a',hs:'spike'},
+{id:'gojo',n:'Gojo',v:'confident, carefree, playful',k:'focus',to:'unbothered',g:['#7aa7ff','#c9a8ff'],s:'#ffe4cf',h:'#f2f5ff',hs:'spike'},
+{id:'tanjiro',n:'Tanjiro',v:'kind, determined, grounded',k:'calm',to:'grounded',g:['#3fa27a','#7fd6a8'],s:'#ffd9b8',h:'#7a2b3a',hs:'cap'},
+{id:'anya',n:'Anya',v:'chaotic, curious, easily overwhelmed',k:'energy',to:'playful',g:['#ff9ec4','#ffc7de'],s:'#ffe0d0',h:'#ff9fb8',hs:'tufts'},
+{id:'totoro',n:'Totoro',v:'soft, calm, cozy',k:'calm',to:'calm and cozy',g:['#8aa7b8','#bcd1c5'],s:'#a7b3bb',h:'#a7b3bb',hs:'ears'},
+{id:'sponge',n:'SpongeBob',v:'playful, upbeat, high-energy',k:'energy',to:'bright',g:['#ffe14d','#ffb84d'],s:'#ffe45c',h:'#ffe45c',hs:'none'},
+{id:'doraemon',n:'Doraemon',v:'comforting, loyal, safe',k:'comfort',to:'comforted',g:['#4fb8f0','#8fdcff'],s:'#52b6f2',h:'#52b6f2',hs:'muzzle'},
+{id:'joy',n:'Joy',v:'bright, bubbly, optimistic',k:'energy',to:'bright',g:['#ffd54a','#ffe98a'],s:'#ffe9a0',h:'#4aa8ff',hs:'cap'}];
+const WHO=['luffy','naruto','tanjiro','gojo','anya','totoro','sponge','doraemon'],TAR=['totoro','luffy','gojo','tanjiro','joy','doraemon','sponge','naruto'];
+const ch=id=>C.find(x=>x.id===id),nm=x=>x?((ch(x)||{n:x}).n):'?';
+const nmc=x=>String(x||'').replace(/[<>&"'`]/g,'').trim().slice(0,24);
+function getC(x){x=nmc(x);const lo=x.toLowerCase(),p=C.find(c=>c.id===lo||c.n.toLowerCase()===lo);if(p)return p;
+let h=0;for(const q of x)h=(h*31+q.charCodeAt(0))%360;
+return{id:'custom',n:x,cu:1,v:'your character',k:null,to:'Your target energy',g:[`hsl(${h},68%,58%)`,`hsl(${(h+40)%360},72%,70%)`],s:'#ffe0c2',h:`hsl(${h},45%,26%)`,hs:'cap'}}
+const HAIR={hat:'<ellipse cx="50" cy="38" rx="34" ry="7" fill="#f2cf6a"/><path d="M31 38a19 17 0 0 1 38 0z" fill="#f2cf6a"/><rect x="31" y="33" width="38" height="5" fill="#d9442f"/>',
+spike:'<path d="M27 52L30 28 39 40 44 22 52 38 60 22 64 40 72 28 73 52q-23-14-46 0z"/>',cap:'<path d="M27 54a23 25 0 0 1 46 0q-23-16-46 0z"/>',
+tufts:'<path d="M27 54a23 23 0 0 1 46 0q-23-14-46 0z"/><path d="M33 36L26 20l14 8zM67 36l7-16-14 8z"/>',ears:'<path d="M32 38L30 14l16 14zM68 38l2-24-16 14z"/>',none:'',muzzle:'<ellipse cx="50" cy="62" rx="16" ry="12" fill="#fff"/>'};
+const D='<circle cx="42" cy="52" r="2.8" fill="#2a1d33" stroke="none"/><circle cx="58" cy="52" r="2.8" fill="#2a1d33" stroke="none"/>',BL='<circle cx="35" cy="60" r="4" fill="#ff7a96" opacity=".45"/><circle cx="65" cy="60" r="4" fill="#ff7a96" opacity=".45"/>',TX=(t,x,y)=>`<text x="${x}" y="${y}" font-size="14">${t}</text>`;
+const E={
+happy:{l:'Happy',e:'😊',m:'clear',b:'fine',env:'day',bf:4,r:0,bg:['#ffe27a','#ffa6c9'],ey:'<path d="M37 51q5-6 10 0M53 51q5-6 10 0"/>',br:'',mo:'<path d="M42 62q8 10 16 0"/>',dc:BL},
+sad:{l:'Sad',e:'😔',m:'flat',b:'drained',env:'rain',bf:2,r:3,bg:['#7d93c9','#4f5f94'],ey:D,br:'<path d="M36 46l10-4M64 46l-10-4"/>',mo:'<path d="M43 68q7-7 14 0"/>',dc:'<path d="M42 56q3 6 0 8q-3-2 0-8" fill="#8fd6ff" stroke="none"/>'},
+anxious:{l:'Anxious',e:'😰',m:'racing',b:'tense',env:'rain',bf:2,r:0,bg:['#8a8fd6','#5a5aa8'],ey:'<circle cx="42" cy="51" r="4.6" fill="#fff"/><circle cx="58" cy="51" r="4.6" fill="#fff"/><circle cx="42" cy="51" r="1.7" fill="#2a1d33" stroke="none"/><circle cx="58" cy="51" r="1.7" fill="#2a1d33" stroke="none"/>',br:'<path d="M36 44l10-4M64 44l-10-4"/>',mo:'<path d="M41 67q3-3 6 0t6 0t6 0"/>',dc:'<path d="M72 38q4 7 0 9q-4-2 0-9" fill="#8fd6ff" stroke="none"/>'},
+angry:{l:'Angry',e:'😤',m:'racing',b:'tense',env:'sunset',bf:2,r:0,bg:['#ff8a5c','#d6334f'],ey:D,br:'<path d="M36 42l11 5M64 42l-11 5"/>',mo:'<path d="M43 68q7-6 14 0"/>',dc:TX('💢',64,36)},
+tired:{l:'Tired',e:'🥱',m:'flat',b:'drained',env:'night',bf:2,r:-5,bg:['#4a5a9a','#2a3566'],ey:'<path d="M37 52h10M53 52h10"/>',br:'',mo:'<path d="M46 66h8"/>',dc:TX('💤',66,34)},
+overwhelmed:{l:'Overwhelmed',e:'🫠',m:'racing',b:'tense',env:'rain',bf:1,r:0,bg:['#a07ad8','#6a4fb0'],ey:'<circle cx="42" cy="51" r="4.4"/><circle cx="58" cy="51" r="4.4"/><circle cx="42" cy="51" r="1.2" fill="#2a1d33"/><circle cx="58" cy="51" r="1.2" fill="#2a1d33"/>',br:'<path d="M37 44q5-3 9 0M63 44q-5-3-9 0"/>',mo:'<path d="M42 66q4 4 8 0t8 0"/>',dc:TX('💫',64,34)},
+calm:{l:'Calm',e:'😌',m:'clear',b:'fine',env:'night',bf:4,r:0,bg:['#8fd6c0','#5aa88e'],ey:'<path d="M37 52q5 5 10 0M53 52q5 5 10 0"/>',br:'',mo:'<path d="M44 64q6 4 12 0"/>',dc:BL+TX('🌿',64,34)},
+excited:{l:'Excited',e:'⚡',m:'racing',b:'fine',env:'day',bf:5,r:-3,bg:['#ffb347','#ff5e9c'],ey:'<circle cx="42" cy="51" r="3.8" fill="#2a1d33" stroke="none"/><circle cx="58" cy="51" r="3.8" fill="#2a1d33" stroke="none"/><circle cx="43" cy="50" r="1.2" fill="#fff" stroke="none"/><circle cx="59" cy="50" r="1.2" fill="#fff" stroke="none"/>',br:'<path d="M37 44q5-4 9 0M63 44q-5-4-9 0"/>',mo:'<path d="M41 62q9 14 18 0z" fill="#7a1f3a"/>',dc:TX('⚡',64,34)}};
+function av(c,emo,sz){const e=E[emo]||E.calm,id='g'+Math.random().toString(36).slice(2,7),post=(c.hs==='ears'||c.hs==='muzzle')?'':(HAIR[c.hs]||'');
+return `<svg class="avs" style="transform:rotate(${e.r}deg)" viewBox="0 0 100 100" width="${sz}" height="${sz}" role="img" aria-label="${c.n}, ${e.l}"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${e.bg[0]}"/><stop offset="1" stop-color="${e.bg[1]}"/></linearGradient></defs><rect width="100" height="100" rx="26" fill="url(#${id})"/>${c.hs==='ears'?`<g fill="${c.s}">${HAIR.ears}</g>`:''}<path d="M22 100q0-22 28-22t28 22z" fill="${c.g[0]}"/>${c.cu?`<text x="50" y="97" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">${c.n[0].toUpperCase()}</text>`:''}<circle cx="50" cy="52" r="23" fill="${c.s}"/>${c.hs==='muzzle'?HAIR.muzzle:''}<g fill="${c.h}">${post}</g><g fill="none" stroke="#2a1d33" stroke-width="2.6" stroke-linecap="round">${e.br}${e.ey}${e.mo}</g>${e.dc}</svg>`}
+const R=[
+{id:'box',name:'Box breathing',e:'🟦',k:'breath',p:[['Breathe in',4,1],['Hold',4,1],['Breathe out',4,.6],['Hold',4,.6]],mind:['racing','foggy'],body:['tense','fine'],t:['calm','focus'],why:'Even counts steady a racing mind.'},
+{id:'exhale',name:'Long exhale',e:'🌬️',k:'breath',p:[['Breathe in',4,1],['Breathe out slowly',6,.6]],mind:['racing','flat'],body:['tense','drained'],t:['calm'],why:'Breathing out longer than in tells your body it can slow down.'},
+{id:'desk',name:'Desk release',e:'🧘',k:'steps',s:[['Sit tall and drop your shoulders away from your ears',15],['Tilt your head to the right, ear toward shoulder',20],['Now tilt to the left',20],['Roll both shoulders back, slowly',20],['Circle your wrists, then spread your fingers wide',20],['Clasp hands behind you and open your chest',20],['Take one big breath in and let it fall out',10]],mind:['racing','foggy'],body:['tense'],t:['calm','focus'],why:'Neck, shoulders and wrists hold the most screen-time tension.'},
+{id:'ground',name:'5-4-3-2-1 grounding',e:'🌱',k:'steps',s:[['Name 5 things you can see',30],['Name 4 things you can touch',25],['Name 3 things you can hear',25],['Name 2 things you can smell',20],['Name 1 thing you can taste, then breathe out',20]],mind:['racing','flat'],body:['fine','tense','drained'],t:['calm'],why:'Counting senses pulls attention out of your head and into the room.'},
+{id:'eyes',name:'Eye rest',e:'👀',k:'steps',s:[['Look away from the screen. Find something far away',20],['Keep looking far. Let your eyes soften',20],['Blink slowly 10 times',15],['Rub your palms warm and rest them over closed eyes',30],['Open your eyes and look at something green or natural',15]],mind:['foggy'],body:['fine','tense'],t:['focus'],why:'Long focus on a near screen tires eye muscles. Distance resets them.'},
+{id:'walk',name:'Water and walk',e:'💧',k:'steps',s:[['Stand up and fill a glass of water',40],['Drink half of it, slowly',20],['Walk anywhere for two minutes. Pass a window if you can',120],['Come back and roll your shoulders once',10]],mind:['foggy','flat'],body:['drained','fine'],t:['energy','focus'],why:'Movement plus water is the cheapest energy boost there is.'},
+{id:'shake',name:'Shake it out',e:'⚡',k:'steps',s:[['Stand up. Shake out your hands and arms',20],['Shake your legs, one at a time',20],['March in place, knees up',30],['Reach both arms overhead and stretch tall',15],['Three quick breaths in through the nose, out through the mouth',15]],mind:['flat','foggy'],body:['drained'],t:['energy'],why:'Short bursts of movement wake the body up when you feel heavy.'},
+{id:'note',name:'One good thing',e:'📝',k:'steps',s:[['Close your eyes and breathe slowly',20],['Recall one thing that went well today, however small',30],['Picture it in detail: where were you, who was there?',30],['Say thank you to yourself or someone else, silently',20]],mind:['flat','racing'],body:['fine','drained'],t:['comfort','calm'],why:'Revisiting a small win lifts a flat mood without forcing positivity.'}];
+const MOVE=['walk','shake'],BR=['box','exhale'];
+const st={curO:null,emo:null,tarO:null,time:3,chk:'unsure',before:3,skip:[]},stack=[];let step='land';
+const dkey=t=>{const d=new Date(t);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const totalSec=(r,t)=>r.k==='breath'?t*60:r.s.reduce((a,x)=>a+x[1],0);
+const mins=(r,t)=>{const s=totalSec(r,t);return s<75?1:Math.round(s/60)};
+function byR(){const b={};S.log.forEach(l=>{(b[l.id]=b[l.id]||[]).push(l.after-l.before)});return b}
+const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+function recs(){const em=E[st.emo]||E.calm,t=st.tarO,by=byR(),tk=t.k||(em.b==='drained'||em.m==='flat'?'energy':'calm');let mind=em.m,body=em.b;
+if(st.chk==='mind')body='fine';if(st.chk==='body')mind='clear';
+return R.filter(r=>!st.skip.includes(r.id)).map(r=>{let s=(r.mind.includes(mind)?(r.mind[0]===mind?3:2):0)+(r.body.includes(body)?(r.body[0]===body?3:2):0)+(r.t.includes(tk)?3:0);
+const ts=totalSec(r,st.time);if(r.k==='steps'&&ts>st.time*60+40)s-=5;if(r.k==='steps'&&ts<st.time*60*.4)s-=1;
+if(st.before<=2&&r.id==='shake')s-=2;const a=by[r.id];if(a)s+=Math.max(-2,Math.min(3,avg(a)*1.5));return{r,s}}).sort((a,b)=>b.s-a.s).map(x=>x.r)}
+/* environments */
+const WARM={rain:'sunset',night:'dream',day:'day',sunset:'day',dream:'dream'};
+function env(e,persist){document.body.dataset.e=e;document.querySelectorAll('.env').forEach(x=>x.classList.toggle('on',x.id===e));
+document.querySelectorAll('#tools [data-e]').forEach(b=>b.classList.toggle('on',b.dataset.e===(persist?e:S.env)));if(persist){S.env=e;save()}}
+$('#tools').addEventListener('click',e=>{const b=e.target.closest('[data-e]');if(b)env(b.dataset.e,true)});
+(function(){const f=$('#fx');for(let i=0;i<45;i++){const s=document.createElement('i');s.className='st';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*70}%;animation-delay:${Math.random()*3}s`;f.appendChild(s)}
+for(let i=0;i<55;i++){const d=document.createElement('i');d.className='dp';d.style.cssText=`left:${Math.random()*100}%;animation-duration:${.7+Math.random()*.6}s;animation-delay:${Math.random()*2}s`;f.appendChild(d)}})();
+/* nav */
+function go(s,push=true){if(push&&step!=='run')stack.push(step);stopT();step=s;window.scrollTo(0,0);({land,who,feel,tar,time,chk,rec,rate,res,you})[s]()}
+function back(){const p=stack.pop()||'land';go(p,false)}
+const PR={who:1,feel:2,tar:3,time:4,chk:5,rec:5};
+const prog=()=>PR[step]?`<div class="prog" aria-label="Step ${PR[step]} of 5">${['Character','Feeling','Target','Time','Reset'].map((l,i)=>`<span data-n="0${i+1}" class="${i+1<PR[step]?'dn':i+1===PR[step]?'on':''}">0${i+1} ${l}</span>`).join('')}</div>`:'';
+const bk=()=>prog()+(stack.length?'<button class="bk" id="bk">← Back</button>':'');
+const bindBk=()=>{const b=$('#bk');if(b)b.onclick=back};
+$('#home').onclick=()=>{stack.length=0;go('land',false)};$('#pf').onclick=()=>go('you');
+/* screens */
+const tEmo=t=>({calm:'calm',comfort:'calm',energy:'excited',focus:'happy'}[t.k||((E[st.emo]||E.calm).b==='drained'?'energy':'calm')]);
+const pathHTML=()=>{const a=st.curO,b=st.tarO,e=E[st.emo];return `<div class="jr"><div class="jc"><div class="meta">Current</div>${av(a,st.emo,92)}<b>${a.n}</b><div class="meta">${e.e} ${e.l}</div></div><div class="jm"><div class="arr">→</div><div class="meta">${st.time} minute reset</div></div><div class="jc"><div class="meta">Target</div>${av(b,tEmo(b),92)}<b>${b.n}</b><div class="meta">${b.to}</div></div></div>`};
+const topOf=a=>{const c={};a.forEach(x=>{if(x)c[x]=(c[x]||0)+1});return Object.keys(c).sort((x,y)=>c[y]-c[x])[0]};
+function land(){M.innerHTML=`<div class="hero"><h1>RESET</h1><p class="sub" style="font-size:24px;color:#fff;font-weight:700;margin-bottom:12px">Tiny breaks that learn what works for you.</p><p class="sub">Tell us where you're at. We'll help you move a little closer to where you want to be.</p><button class="btn" id="go">Find my reset →</button>
+<p class="q">Let's fix the next 3 minutes, not your entire life.</p></div>${S.log.length?`<button class="btn g" id="py">See my patterns</button>`:''}`;
+$('#go').onclick=()=>{st.skip=[];st.emo=null;st.tarO=null;if(!st.curO&&S.me)st.curO=getC(S.me);go('who')};const p=$('#py');if(p)p.onclick=()=>go('you')}
+function who(){const sel=st.curO&&st.curO.id;
+M.innerHTML=`${bk()}<h1>Who are you?</h1><p class="sub">Pick a character that feels a little like you.</p><p class="meta">This is just for fun. There are no wrong answers.</p><div class="grid" style="margin-top:14px">${WHO.map(id=>{const c=ch(id);return `<button class="ch ${sel===id?'on':''}" data-id="${id}" aria-pressed="${sel===id}">${av(c,'happy',74)}<b>${c.n}</b><span>${c.v}</span></button>`}).join('')}</div>
+<div class="glass"><h2 style="font-size:18px;margin-bottom:10px">Can't find yours?</h2><div class="inp"><input id="cu" maxlength="24" placeholder="Type a character you relate to…" aria-label="Custom character" value="${st.curO&&st.curO.cu?st.curO.n:''}"><button class="btn" id="cb">Use my character →</button></div><p class="meta" style="margin-top:8px">e.g. Wednesday Addams, Pikachu, Batman…</p></div>
+${st.curO?`<div class="glass flow"><div class="meta">Your character</div>${av(st.curO,'happy',84)}<b>${st.curO.n}</b></div>`:''}<button class="btn" id="nx" ${st.curO?'':'disabled'}>Next</button>`;bindBk();
+const pick=c=>{st.curO=c;S.me=c.cu?c.n:c.id;save();st.emo=null;who()};
+M.querySelectorAll('.ch').forEach(b=>b.onclick=()=>pick(ch(b.dataset.id)));const ok=()=>{const v=nmc($('#cu').value);if(v)pick(getC(v))};$('#cb').onclick=ok;$('#cu').onkeydown=e=>{if(e.key==='Enter')ok()};$('#nx').onclick=()=>go('feel')}
+function feel(){const c=st.curO;M.innerHTML=`${bk()}<h1 style="font-size:32px">How are you feeling as ${c.n}?</h1><p class="sub">Swipe through and tap the one that fits.</p><div class="emos">${Object.keys(E).map(k=>`<button class="em ${st.emo===k?'on':''}" data-k="${k}" aria-pressed="${st.emo===k}">${av(c,k,112)}<b>${c.n}</b><span>${E[k].e} ${E[k].l}</span></button>`).join('')}</div><button class="btn" id="nx" ${st.emo?'':'disabled'}>Next</button>`;bindBk();
+const sc=M.querySelector('.emos'),x=sc.scrollLeft;M.querySelectorAll('.em').forEach(b=>b.onclick=()=>{const k=b.dataset.k,l=sc.scrollLeft;st.emo=k;st.before=E[k].bf;env(E[k].env,false);feel();M.querySelector('.emos').scrollLeft=l});$('#nx').onclick=()=>go('tar')}
+function tar(){const sel=st.tarO&&st.tarO.id;M.innerHTML=`${bk()}<h1 style="font-size:32px">Who do you want to feel like?</h1><p class="sub">Borrow a little of their energy.</p><div class="grid" style="margin-top:12px">${TAR.map(id=>{const c=ch(id);return `<button class="ch ${sel===id?'on':''}" data-id="${id}" aria-pressed="${sel===id}">${av(c,tEmo(c),74)}<b>${c.n}</b><span>${c.to}</span></button>`}).join('')}</div>
+<div class="glass"><h2 style="font-size:18px;margin-bottom:10px">Or type your own…</h2><div class="inp"><input id="tu" maxlength="24" placeholder="Who do you want to feel like?" aria-label="Target character or feeling" value="${st.tarO&&st.tarO.cu?st.tarO.n:''}"><button class="btn" id="tb">Use this →</button></div><p class="meta" style="margin-top:8px">Try “Wednesday”, “my happiest self”, “calm”…</p></div>
+${st.tarO?`<div class="glass">${pathHTML()}<p class="q">You don't have to become them.<br>Just borrow some of their energy for a few minutes.</p></div>`:''}<button class="btn" id="nx" ${st.tarO?'':'disabled'}>Next</button>`;bindBk();
+const pick=c=>{st.tarO=c;tar();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})};
+M.querySelectorAll('.ch').forEach(b=>b.onclick=()=>pick(ch(b.dataset.id)));const ok=()=>{const v=nmc($('#tu').value);if(v)pick(getC(v))};$('#tb').onclick=ok;$('#tu').onkeydown=e=>{if(e.key==='Enter')ok()};$('#nx').onclick=()=>go('time')}
+function time(){M.innerHTML=`${bk()}<h2>How much time do you have?</h2><div class="pills">${[1,3,5,10].map(t=>`<button class="pill ${st.time===t?'on':''}" data-t="${t}">${t} MIN</button>`).join('')}</div><button class="btn" id="nx">Next</button>`;bindBk();
+M.querySelectorAll('.pill').forEach(b=>b.onclick=()=>{st.time=+b.dataset.t;time()});$('#nx').onclick=()=>go('chk')}
+function chk(){const O=[['mind','Mind'],['body','Body'],['both','Both'],['unsure','Not sure']];
+M.innerHTML=`${bk()}<h2>What feels most off?</h2><div class="pills">${O.map(o=>`<button class="pill ${st.chk===o[0]?'on':''}" data-c="${o[0]}">${o[1]}</button>`).join('')}</div>
+<h2 style="margin-top:24px">How do you feel right now?</h2><div class="moods">${FACES.map((f,i)=>`<button class="mood ${st.before===i+1?'on':''}" data-b="${i+1}" aria-label="Mood ${i+1} of 5">${f}</button>`).join('')}</div><button class="btn" id="nx">Find my reset →</button>`;bindBk();
+M.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{st.chk=b.dataset.c;chk()});M.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{st.before=+b.dataset.b;chk()});$('#nx').onclick=()=>{st.skip=[];go('rec')}}
+function rec(){const L=recs(),r=L[0],t=st.tarO,by=byR()[r.id],e=E[st.emo];
+M.innerHTML=`${bk()}<p class="sub">Your reset</p><div class="glass">${pathHTML()}<h1 style="font-size:28px;text-align:center;margin-top:12px">${e.l} → ${t.to}</h1><p class="sub" style="text-align:center;font-size:16px">Based on the vibe you chose, here's a tiny reset to try. Let's borrow some ${t.n} energy.</p>
+<div class="glass" style="background:var(--chip);box-shadow:none"><div style="font-size:38px">${r.e}</div><h2 style="margin:4px 0">${r.name}</h2><div class="meta">About ${mins(r,st.time)} min</div><p style="margin:10px 0 0;font-size:15px">${r.why}${by?` You've reported +${avg(by).toFixed(1)} on average after this one.`:''}</p></div></div>
+<button class="btn" id="st">Start ${r.name.toLowerCase()}</button>${L[1]?`<button class="btn g" id="alt">Not feeling it? Try ${L[1].name.toLowerCase()} instead</button>`:''}`;bindBk();
+$('#st').onclick=()=>run(r);const x=$('#alt');if(x)x.onclick=()=>{st.skip.push(r.id);rec()}}
+let T=null,seq,i,left,paused,tot,doneS,cur0,prevEnv;
+const stopT=()=>{clearInterval(T);T=null};
+function build(r){if(r.k==='steps')return r.s.map(x=>({t:x[0],d:x[1],sc:null}));
+const cyc=r.p.reduce((a,x)=>a+x[1],0),n=Math.max(3,Math.round(st.time*60/cyc)),o=[{t:'Sit comfortably. Let your shoulders drop.',d:6,sc:.6}];
+for(let c=0;c<n;c++)r.p.forEach(x=>o.push({t:x[0],d:x[1],sc:x[2]}));return o}
+function run(r){cur0=r;step='run';seq=build(r);i=0;paused=false;tot=seq.reduce((a,x)=>a+x.d,0);doneS=0;left=seq[0].d;
+M.innerHTML=`<div class="glass" style="margin-top:0">${pathHTML()}<div class="meta" style="text-align:center">${mins(r,st.time)} min · ${r.name}</div></div><div class="bar"><i id="pb"></i></div><div class="orbwrap"><div class="orb" id="orb"><span id="cnt"></span></div></div><div class="cue" id="cue" aria-live="polite"></div><div class="meta" id="of" style="text-align:center"></div>
+<div class="row"><button class="btn g" id="pz">Pause</button><button class="btn g" id="rs">Restart</button><button class="btn" id="dn">Done</button></div>`;
+show();$('#pz').onclick=()=>{paused=!paused;$('#pz').textContent=paused?'Resume':'Pause'};$('#rs').onclick=()=>run(r);
+$('#dn').onclick=()=>{stopT();doneS>=10?(window._s=doneS,go('rate',false)):(env(S.env,false),go('rec',false))};
+stopT();T=setInterval(()=>{if(paused)return;left--;doneS++;$('#pb').style.width=Math.min(100,doneS/tot*100)+'%';if(left<=0)next();else $('#cnt').textContent=left},1000)}
+function show(){const x=seq[i],o=$('#orb');$('#cue').textContent=x.t;$('#cnt').textContent=x.d;$('#of').textContent=cur0.k==='steps'?`Step ${i+1} of ${seq.length}`:'Follow the circle';
+if(x.sc){o.style.transitionDuration=x.d+'s';o.style.transform=`scale(${x.sc})`}else{o.style.transitionDuration='.6s';o.style.transform='scale(.8)'}}
+function next(){i++;if(i>=seq.length){stopT();window._s=tot;return go('rate',false)}left=seq[i].d;show()}
+function rate(){M.innerHTML=`<h1 style="text-align:center;margin-top:30px">Nicely done.</h1><h2 style="text-align:center">And now?</h2><div class="moods">${FACES.map((f,k)=>`<button class="mood" data-a="${k+1}" aria-label="Mood ${k+1} of 5">${f}</button>`).join('')}</div>`;
+M.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=+b.dataset.a;S.log.push({t:Date.now(),id:cur0.id,before:st.before,after:a,sec:window._s||0,from:st.curO.n,to:st.tarO.n,emo:st.emo,te:tEmo(st.tarO),chk:st.chk,time:st.time,env:document.body.dataset.e});save();st.after=a;go('res',false)})}
+function sparkle(){for(let k=0;k<14;k++){const s=document.createElement('span');s.className='sp';s.textContent=['✨','🌟','💫'][k%3];s.style.left=(15+Math.random()*70)+'vw';s.style.top=(45+Math.random()*30)+'vh';s.style.animationDelay=Math.random()*.5+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),2200)}}
+function res(){const a=st.curO,t=st.tarO,e=E[st.emo],d=st.after-st.before;
+env(WARM[document.body.dataset.e],false);if(d>0)sparkle();
+const here=d>0?`${av(t,tEmo(t),92)}<b>${t.n}</b><div class="meta">${t.to}</div>`:`${av(a,'calm',92)}<b>${a.n}</b><div class="meta">${d===0?'Holding steady':'Rough one'}</div>`;
+M.innerHTML=`<div class="glass flow"><div class="meta">You started</div>${av(a,st.emo,92)}<b>${a.n}</b><div class="meta">${e.e} ${e.l}</div><div class="dn">↓</div><div class="meta">${mins(cur0,st.time)} minute reset</div><b>${cur0.name}</b><div class="dn">↓</div><div class="meta">You're here</div>${here}
+<div class="lift">${d>0?'+':''}${d}</div><div>${d>0?"Nice. That's a little more breathing room.":d===0?'No lift this time, and that counts. A different reset might fit better.':'Some days a break is all it is. Try a different reset?'}</div><p class="meta">Your reported lift, based on your own check-ins.</p></div>
+<button class="btn g" id="tr">Not quite feeling it? Try a different reset →</button><button class="btn" id="nw">New reset</button>${patterns()}`;
+$('#tr').onclick=()=>{st.skip.push(cur0.id);st.before=st.after;go('rec',false)};$('#nw').onclick=()=>{env(S.env,false);stack.length=0;st.emo=null;st.tarO=null;go('who',false)}}
+function dl(t){const k=dkey(t);return k===dkey(Date.now())?'Today':k===dkey(Date.now()-864e5)?'Yesterday':new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric'})}
+function patterns(){const L=S.log,b=byR(),rows=R.filter(r=>b[r.id]).map(r=>({r,v:avg(b[r.id])})).sort((x,y)=>y.v-x.v).slice(0,3);
+const g=ids=>{const v=[].concat(...ids.map(i=>b[i]||[]));return v.length?avg(v):null},cats=[['movement',g(MOVE)],['breathing',g(BR)],['grounding and mindful pauses',g(['ground','eyes','note','desk'])]].filter(c=>c[1]!==null).sort((x,y)=>y[1]-x[1]);
+const ev=topOf(L.map(l=>l.emo)),tv=topOf(L.map(l=>l.to)),msg=L.length<3?'A few more resets and your pattern will start to show.':`Based on your check-ins, you tend to report a bigger mood lift after ${cats[0][0]}.`;
+return `<div class="glass"><h2>Your Reset Patterns</h2><p class="sub" style="font-size:15px">You've completed ${L.length} reset${L.length===1?'':'s'}.</p>${ev?`<p class="meta">Most common starting vibe: ${E[ev].e} ${E[ev].l}${tv?` · Most common target: ${nm(tv)}`:''}</p>`:''}${rows.map(x=>`<div class="lf"><span class="nm">${x.r.e} ${x.r.name}</span><span class="tr"><i style="width:${Math.max(4,Math.min(100,(x.v+1)/5*100))}%"></i></span><span class="v">${x.v>0?'+':''}${x.v.toFixed(1)}</span></div>`).join('')}<p class="meta">${msg} This is your own reported mood change, not a medical measure.</p>
+<h2 style="margin-top:18px;font-size:17px">History</h2>${L.slice(-5).reverse().map(l=>{const r=R.find(x=>x.id===l.id),d=l.after-l.before;return `<div class="hi"><span><span class="meta">${dl(l.t)}</span><br>${nm(l.from)}${l.emo&&E[l.emo]?` (${E[l.emo].l})`:''} → ${nm(l.to)} · ${r?r.name:''}</span><b>${d>0?'+':''}${d}</b></div>`}).join('')}</div>`}
+function you(){const L=S.log,b=byR(),best=R.filter(r=>b[r.id]).sort((x,y)=>avg(b[y.id])-avg(b[x.id]))[0],ev=topOf(L.map(l=>l.emo)),tv=topOf(L.map(l=>l.to)),al=L.length?avg(L.map(l=>l.after-l.before)):0;
+const cell=(l,v,e)=>`<div class="stat"><span>${l}</span><b>${e||''} ${v}</b></div>`;
+M.innerHTML=`${bk()}<h1>My reset profile</h1><p class="sub">Playful, private, and only on this device.</p>${L.length?`<div class="stats">${cell('Most common starting vibe',ev?E[ev].l:'-',ev?E[ev].e:'')}${cell('Most common target',tv?nm(tv):'-','')}${cell('Most effective for you',best?best.name:'-',best?best.e:'')}${cell('Resets completed',L.length,'')}${cell('Average reported lift',(al>0?'+':'')+al.toFixed(1),'')}</div>${patterns()}`:`<div class="glass"><p class="sub">Nothing here yet. Do your first reset and your profile builds itself.</p><button class="btn" id="s">Find my reset →</button></div>`}`;bindBk();
+const s=$('#s');if(s)s.onclick=()=>{stack.length=0;go('who',false)}}
+env(S.env||'day',true);land();
+</script>
+</body>
+</html>
